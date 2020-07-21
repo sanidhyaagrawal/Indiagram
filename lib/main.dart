@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Indiagram/repository.dart';
-import 'package:Indiagram/india_home_screen.dart';
-import 'package:Indiagram/login_screen.dart';
+import 'package:Indiagram/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,7 +41,7 @@ class MyAppState extends State<MyApp> {
             }
           },
         )*/
-        home: LoginScreen()
+        home: Home()
     );
   }
 }
