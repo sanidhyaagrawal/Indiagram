@@ -34,7 +34,6 @@ class _HomeState extends State<Home> {
           ..buildViewportChrome(context, null, AxisDirection.down),
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(25),
             height: MediaQuery.of(context).size.height -

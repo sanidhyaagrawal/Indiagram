@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:Indiagram/india_home_screen.dart';
@@ -11,6 +13,74 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _userId = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool _showpassword = false;
+  bool _isEnabled = false;
+  int _state = 0;
+
+  _enablebtn() {
+    if (_userId.text.isEmpty || _password.text.isEmpty) {
+      setState(() {
+        _isEnabled = false;
+      });
+    } else {
+      setState(() {
+        _isEnabled = true;
+      });
+    }
+  }
+
+  _animateButton() {
+    setState(() {
+      _state = 1;
+    });
+    setState(() {
+      _isEnabled = false;
+    });
+
+    Timer(Duration(milliseconds: 5000), () {
+      setState(() {
+        _state = 2;
+      });
+    });
+  }
+
+  _showEmptyDialog(String title) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(
+          "Error",
+          style: TextStyle(
+              color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          "$title can't be empty",
+          style: TextStyle(color: Colors.black38, fontSize: 13),
+        ),
+        actions: <Widget>[
+          FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "Dismiss",
+                style: TextStyle(color: Colors.blueAccent),
+              ))
+        ],
+      ),
+    );
+  }
+
+  _login() {
+    if (_userId.text.isEmpty || _password.text.isEmpty) {
+      _showEmptyDialog("Type something");
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => IndiaHomeScreen()),
+      );
+    }
+  }
 
   /*final _formKey = GlobalKey<FormState>();
   String _email, _password;*/
@@ -25,67 +95,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _textStyleBlack = TextStyle(
-        fontSize: 14.0, color: Colors.black);
+    var _textStyleBlack = TextStyle(fontSize: 14.0, color: Colors.black);
     var _textStyleGrey = TextStyle(fontSize: 12.0, color: Colors.grey[500]);
     var _textStyleBlueGrey = TextStyle(
         fontSize: 12.0, color: Colors.blue[900], fontWeight: FontWeight.bold);
     var padd = MediaQuery.of(context).padding;
-    bool _isEnabled = false;
-
-    _showEmptyDialog(String title) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: Text(
-            "Error",
-            style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          content: Text(
-            "$title can't be empty",
-            style: TextStyle(color: Colors.black38, fontSize: 13),
-          ),
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  "Dismiss",
-                style: TextStyle(color: Colors.blueAccent),
-                )
-            )
-          ],
-        ),
-      );
-    }
-
-    _enablebtn() {
-      if (_userId.text.isEmpty || _password.text.isEmpty) {
-        setState( () {
-          _isEnabled = false;
-        }
-        );
-      } else {
-        setState( () {
-          _isEnabled = true;
-        }
-        );
-      }
-    }
-
-    _login() {
-      if (_userId.text.isEmpty || _password.text.isEmpty) {
-        _showEmptyDialog("Type something");
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => IndiaHomeScreen()
-          ),
-        );
-      }
-    }
 
     return Scaffold(
       bottomNavigationBar: Container(
@@ -116,11 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       body: ScrollConfiguration(
-        behavior: new ScrollBehavior()
+        behavior: ScrollBehavior()
           ..buildViewportChrome(context, null, AxisDirection.down),
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(25),
             height: MediaQuery.of(context).size.height -
@@ -149,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: 'Phone number, email or username',
                       hintStyle: TextStyle(color: Colors.grey[500]),
                       filled: true,
-                      fillColor: Colors.white10,
+                      fillColor: Colors.grey[100],
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
                       ),
@@ -171,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: 'Password',
                       hintStyle: TextStyle(color: Colors.grey[500]),
                       filled: true,
-                      fillColor: Colors.white10,
+                      fillColor: Colors.grey[100],
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
                       ),
@@ -180,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.remove_red_eye,
+                          Icons.visibility,
                           color: this._showpassword
                               ? Colors.black
                               : Colors.black12,
@@ -200,18 +213,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 50,
                   margin: const EdgeInsets.only(top: 15.0),
-                  child: RaisedButton(
-                    onPressed: _isEnabled ? () => _login() : null,
+                  child: FlatButton(
+                    onPressed: _isEnabled
+                        ? () {
+                            setState(() {
+                              if (_state == 0) {
+                                _animateButton();
+                              }
+                            });
+                          }
+                        : null,
                     color: Colors.blue,
                     disabledColor: Colors.lightBlueAccent,
                     padding: EdgeInsets.all(10.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: setUpButtonChild(),
                   ),
                 ),
                 Row(
@@ -341,5 +359,20 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Widget setUpButtonChild() {
+    if (_state == 0) {
+      return Text(
+        "Log In",
+        style: TextStyle(color: Colors.white),
+      );
+    } else if (_state == 1) {
+      return CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      );
+    } else {
+      return _login();
+    }
   }
 }
