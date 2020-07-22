@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var _textStyleBlueGrey = TextStyle(
         fontSize: 12.0, color: Colors.blue[900], fontWeight: FontWeight.bold);
     var padd = MediaQuery.of(context).padding;
+    bool _isEnabled = false;
 
     _showEmptyDialog(String title) {
       showDialog(
@@ -60,10 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
 
+    _enablebtn() {
+      if (_userId.text.isEmpty || _password.text.isEmpty) {
+        setState( () {
+          _isEnabled = false;
+        }
+        );
+      } else {
+        setState( () {
+          _isEnabled = true;
+        }
+        );
+      }
+    }
+
     _login() {
-      if (_userId.text.isEmpty) {
-        _showEmptyDialog("Type something");
-      } else if (_password.text.isEmpty) {
+      if (_userId.text.isEmpty || _password.text.isEmpty) {
         _showEmptyDialog("Type something");
       } else {
         Navigator.push(
@@ -92,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Don't have an account?", style: _textStyleGrey),
+                      Text("Don't have an account? ", style: _textStyleGrey),
                       Text('Sign up.', style: _textStyleBlueGrey),
                     ],
                   ),
@@ -131,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   child: TextField(
                     controller: _userId,
+                    onChanged: _enablebtn(),
                     decoration: InputDecoration(
                       hintText: 'Phone number, email or username',
                       hintStyle: TextStyle(color: Colors.grey[500]),
@@ -151,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.only(top: 15.0),
                   child: TextField(
                     controller: _password,
+                    onChanged: _enablebtn(),
                     obscureText: !this._showpassword,
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -186,9 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50,
                   margin: const EdgeInsets.only(top: 15.0),
                   child: RaisedButton(
-                    onPressed: _login,
+                    onPressed: _isEnabled ? () => _login() : null,
                     color: Colors.blue,
-                    disabledColor: Colors.lightBlue,
+                    disabledColor: Colors.lightBlueAccent,
                     padding: EdgeInsets.all(10.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),

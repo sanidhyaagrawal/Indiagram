@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 90.0, bottom: 25.0),
+                  padding: const EdgeInsets.only(top: 55.0, bottom: 25.0),
                   child: Text(
                     'Instagram',
                     style: TextStyle(
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                 Container(
                   width: double.infinity,
                   height: 50,
-                  margin: const EdgeInsets.only(top: 15.0),
+                  margin: const EdgeInsets.only(top: 30.0),
                   child: RaisedButton(
                     onPressed: _signup,
                     color: Colors.blue,
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      "Log In",
+                      "Create account",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

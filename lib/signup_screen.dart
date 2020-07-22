@@ -33,8 +33,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Already have an account?", style: _textStyleGrey),
-                      Text('Login', style: _textStyleBlueGrey),
+                      Text("Already have an account? ", style: _textStyleGrey),
+                      Text('Log in', style: _textStyleBlueGrey),
                     ],
                   ),
                 ),
@@ -73,7 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: TextField(
                     controller: null,
                     decoration: InputDecoration(
-                      hintText: 'Phone number',
+                      hintText: 'Phone',
                       hintStyle: TextStyle(color: Colors.grey[500]),
                       filled: true,
                       fillColor: Colors.white10,
@@ -92,7 +92,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Forgot your login details?',
+                      'You may receive SMS updates from Instagram and can opt out'
+                          ' at any time',
                       style: _textStyleGrey,
                     ),
                   ],
@@ -110,7 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      "Log In",
+                      'Next',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
