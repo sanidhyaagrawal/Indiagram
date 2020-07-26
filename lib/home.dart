@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Indiagram/signup_screen.dart';
-import 'package:Indiagram/login_screen.dart';
+import 'package:Indiagram/login/login_page.dart';
+import 'package:Indiagram/repository/user_repository.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final userRepository = UserRepository();
+
   @override
   Widget build(BuildContext context) {
     var padd = MediaQuery.of(context).padding;
@@ -23,7 +26,7 @@ class _HomeState extends State<Home> {
     _login() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()
+        MaterialPageRoute(builder: (context) => LoginPage(userRepository: userRepository,)
         ),
       );
     }
