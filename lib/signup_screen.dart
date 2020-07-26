@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Indiagram/login/login_page.dart';
-import 'package:Indiagram/repository/user_repository.dart';
+import 'package:Indiagram/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -8,8 +7,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final userRepository = UserRepository();
-
   @override
   Widget build(BuildContext context) {
     var _textStyleBlack = TextStyle(fontSize: 14.0, color: Colors.black);
@@ -21,10 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _login() {
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => LoginPage(
-                  userRepository: userRepository,
-                )),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     }
 
@@ -44,7 +38,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Already have an account? ", style: _textStyleGrey),
+                    Text(
+                        "Already have an account? ",
+                        style: _textStyleGrey
+                    ),
                     FlatButton(
                       onPressed: _login,
                       child: Text(
@@ -87,9 +84,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 Container(
                   child: TextField(
                     controller: null,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.go,
-                    autocorrect: false,
                     decoration: InputDecoration(
                       hintText: 'Phone',
                       hintStyle: TextStyle(color: Colors.grey[500]),
