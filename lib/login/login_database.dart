@@ -4,18 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'login_screen.dart';
 
 final userTable = "Login";
 final columnId = "Id";
 final columnKey = "Key";
 final columnUsername = "Username";
 
-final _base = "http://b4c4eaef08d9.ngrok.io";
+final _base = "http://28e8a2100448.ngrok.io";
 final _keyEndpoint = "/apis/v1/login/";
 final _keyURL = _base + _keyEndpoint;
 
-Future<Key> getKey(UserLogin userLogin) async {
+Future<Key> getKey(userLogin) async {
   print(_keyURL);
   var dio = Dio();
 
@@ -61,6 +60,8 @@ class Key{
   }
 }
 
+
+//Database for user login
 class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
 

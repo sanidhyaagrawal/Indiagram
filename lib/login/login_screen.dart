@@ -3,14 +3,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../india_home_screen.dart';
+import 'login_database.dart';
 
 final _userId = TextEditingController();
 final _password = TextEditingController();
 
 class UserLogin {
+  String userId = _userId.text;
+  String password = _password.text;
+
+  UserLogin({this.userId,this.password});
+
   toDatabaseJson() => {
-    'credential': _userId.text,
-    'password': _password.text,
+    'credential': userId,
+    'password': password,
   };
 }
 
@@ -23,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showpassword = false;
   bool _isEnabled = false;
   int _state = 0;
+  var res;
 
   _enablebtn() {
     if (_userId.text.isEmpty || _password.text.isEmpty) {
@@ -214,12 +221,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   margin: const EdgeInsets.only(top: 15.0),
                   child: FlatButton(
                     onPressed: _isEnabled
-                        ? () {
+                        ? () async {
                       setState(() {
                         if (_state == 0) {
                           _animateButton();
                         }
                       });
+                      res = await getKey(UserLogin);
                     }
                         : null,
                     color: Colors.blue,
