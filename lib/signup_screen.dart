@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -8,12 +9,18 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
-    var _textStyleBlack = TextStyle(
-        fontSize: 14.0, color: Colors.black);
+    var _textStyleBlack = TextStyle(fontSize: 14.0, color: Colors.black);
     var _textStyleGrey = TextStyle(fontSize: 12.0, color: Colors.grey[500]);
     var _textStyleBlueGrey = TextStyle(
         fontSize: 12.0, color: Colors.blue[900], fontWeight: FontWeight.bold);
     var padd = MediaQuery.of(context).padding;
+
+    _login() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    }
 
     return Scaffold(
       bottomNavigationBar: Container(
@@ -28,15 +35,21 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 1.1,
                   color: Colors.grey[350],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 17.5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Already have an account? ", style: _textStyleGrey),
-                      Text('Log in', style: _textStyleBlueGrey),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                        "Already have an account? ",
+                        style: _textStyleGrey
+                    ),
+                    FlatButton(
+                      onPressed: _login,
+                      child: Text(
+                        'Log in',
+                        style: _textStyleBlueGrey,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             )
@@ -48,7 +61,6 @@ class _SignupScreenState extends State<SignupScreen> {
           ..buildViewportChrome(context, null, AxisDirection.down),
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(25),
             height: MediaQuery.of(context).size.height -
